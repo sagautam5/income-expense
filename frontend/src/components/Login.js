@@ -8,13 +8,8 @@ export default class Login extends Component{
             eye: 'fa fa-eye',
             email: '',
             password: '',
-            remember: false
+            remember: false,
         }
-        this.showHide = this.showHide.bind(this);
-        this.updateEmail = this.updateEmail.bind(this);
-        this.updatePassword = this.updatePassword.bind(this);
-        this.updateRemember = this.updateRemember.bind(this);
-        console.log(this.state);
     }
 
     showHide(event){
@@ -26,13 +21,15 @@ export default class Login extends Component{
         })
     }
 
-    updateEmail(event){
-        this.setState({email: event.target.value});
+    updateInput = (event) =>{
+        const name = event.target.name;
+        const value = event.target.value;
+
+        this.setState({[name]: value});
+        console.log(this.state);
     }
-    updatePassword(event){
-        this.setState({password: event.target.value});
-    }
-    updateRemember(event){
+
+    updateRemember = (event) =>{
         var current = this.state.remember;
         this.setState({remember: !current});
     }
@@ -55,7 +52,7 @@ export default class Login extends Component{
                                 Email
                             </span>
                             <div className="wrap-input100 validate-input m-b-36" data-validate="Email is required">
-                                <input className="input100" type="text" name="email" onChange = {this.updateEmail} value={this.state.email}/>
+                                <input className="input100" type="text" name="email" onChange = {this.updateInput} value={this.state.email}/>
                                 <span className="focus-input100"></span>
                             </div>
 
@@ -66,7 +63,7 @@ export default class Login extends Component{
                                 <span className="btn-show-pass">
                                     <i className={this.state.eye} onClick={this.showHide}></i>
                                 </span>
-                                <input className="input100" type={this.state.type} name="password" onChange = {this.updatePassword} value={this.state.password}/>
+                                <input className="input100" type={this.state.type} name="password" onChange = {this.updateInput} value={this.state.password}/>
                                 <span className="focus-input100"></span>
                             </div>
 

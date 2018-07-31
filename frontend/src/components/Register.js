@@ -10,26 +10,31 @@ export default class Register extends Component{
             password: '',
             confirm_password: ''
         }
-        this.updateName = this.updateName.bind(this);
-        this.updateEmail = this.updateEmail.bind(this);
-        this.updatePassword = this.updatePassword.bind(this);
-        this.updateConfirmPassword = this.updateConfirmPassword.bind(this);
     }
 
-    updateName(event){
-        this.setState({name: event.target.value});
+    updateInput = (event) =>{
+        const name = event.target.name;
+        const value = event.target.value;
+
+        this.setState({[name]: value});
     }
 
-    updateEmail(event){
-        this.setState({email: event.target.value});
-    }
-
-    updatePassword(event){
-        this.setState({password: event.target.value});
-    }
-
-    updateConfirmPassword(event){
-        this.setState({confirm_password: event.target.value});
+    handleSubmit = (event)=>{
+        event.preventDefault();
+        var user = fetch('localhost:8000/api/users', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: this.state.name,
+                email: this.state.email,
+                password: this.state.password,
+                confirm_password: this.state.confirm_password
+            })
+        });
+        console.log(user);
     }
 
     render(){
@@ -37,7 +42,7 @@ export default class Register extends Component{
             <div className="limiter">
                 <div className="container-login100">
                     <div className="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-                        <form className="login100-form validate-form flex-sb flex-w">
+                        <form className="login100-form validate-form flex-sb flex-w" onSubmit={this.handleSubmit}>
                             <span className="login100-form-title p-b-32">
                                 Sign Up
                             </span>
@@ -45,28 +50,28 @@ export default class Register extends Component{
                                 Name
                             </span>
                             <div className="wrap-input100 validate-input m-b-36" >
-                                <input className="input100" type="text" name="name" value={this.state.name} onChange={this.updateName}/>
+                                <input className="input100" type="text" name="name" value={this.state.name} onChange={this.updateInput}/>
                                 <span className="focus-input100"></span>
                             </div>
                             <span className="txt1 p-b-11">
                                 Email
                             </span>
                             <div className="wrap-input100 validate-input m-b-36">
-                                <input className="input100" type="text" name="email" value={this.state.email} onChange={this.updateEmail}/>
+                                <input className="input100" type="text" name="email" value={this.state.email} onChange={this.updateInput}/>
                                 <span className="focus-input100"></span>
                             </div>
                             <span className="txt1 p-b-11">
                                 Password
                             </span>
                             <div className="wrap-input100 validate-input m-b-36">
-                                <input className="input100" type="password" name="password" value={this.state.password} onChange={this.updatePassword}/>
+                                <input className="input100" type="password" name="password" value={this.state.password} onChange={this.updateInput}/>
                                 <span className="focus-input100"></span>
                             </div>
                             <span className="txt1 p-b-11">
                                 Confirm Password
                             </span>
                             <div className="wrap-input100 validate-input m-b-18">
-                                <input className="input100" type="password" name="confirm-password" value={this.state.confirm_password} onChange={this.updateConfirmPassword}/>
+                                <input className="input100" type="password" name="confirm_password" value={this.state.confirm_password} onChange={this.updateInput}/>
                                 <span className="focus-input100"></span>
                             </div>
                             <div className="container-login100-form-btn">
