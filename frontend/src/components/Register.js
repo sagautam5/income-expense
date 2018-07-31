@@ -10,7 +10,6 @@ export default class Register extends Component{
                             <span className="login100-form-title p-b-32">
                                 Sign Up
                             </span>
-
                             <span className="txt1 p-b-11">
                                 Name
                             </span>
@@ -18,7 +17,6 @@ export default class Register extends Component{
                                 <input className="input100" type="text" name="name"/>
                                 <span className="focus-input100"></span>
                             </div>
-
                             <span className="txt1 p-b-11">
                                 Email
                             </span>
@@ -26,15 +24,20 @@ export default class Register extends Component{
                                 <input className="input100" type="text" name="email"/>
                                 <span className="focus-input100"></span>
                             </div>
-
                             <span className="txt1 p-b-11">
                                 Password
                             </span>
-                            <div className="wrap-input100 validate-input m-b-12">
+                            <div className="wrap-input100 validate-input m-b-36">
                                 <input className="input100" type="password" name="password"/>
                                 <span className="focus-input100"></span>
                             </div>
-
+                            <span className="txt1 p-b-11">
+                                Confirm Password
+                            </span>
+                            <div className="wrap-input100 validate-input m-b-18">
+                                <input className="input100" type="password" name="confirm-password"/>
+                                <span className="focus-input100"></span>
+                            </div>
                             <div className="container-login100-form-btn">
                                 <button className="login100-form-btn">
                                     Register
