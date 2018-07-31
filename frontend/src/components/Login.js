@@ -28,11 +28,9 @@ export default class Login extends Component{
 
     updateEmail(event){
         this.setState({email: event.target.value});
-        console.log(this.state);
     }
     updatePassword(event){
         this.setState({password: event.target.value});
-        console.log(this.state);
     }
     updateRemember(event){
         var current = this.state.remember;
