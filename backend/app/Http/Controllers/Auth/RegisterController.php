@@ -70,10 +70,4 @@ class RegisterController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
-
-    protected function registerUser(Request $request)
-    {
-        $data = $request->all();
-        return response()->json($this->create($data));
-    }
 }

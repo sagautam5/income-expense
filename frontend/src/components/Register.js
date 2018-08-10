@@ -8,33 +8,54 @@ export default class Register extends Component{
             name: '',
             email: '',
             password: '',
-            confirm_password: ''
+            password_confirmation: '',
+            api_token:'',
         }
     }
 
     updateInput = (event) =>{
         const name = event.target.name;
         const value = event.target.value;
-
         this.setState({[name]: value});
     }
 
     handleSubmit = (event)=>{
+        alert(JSON.stringify(this.state));
         event.preventDefault();
-        var user = fetch('localhost:8000/api/users', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: this.state.name,
-                email: this.state.email,
-                password: this.state.password,
-                confirm_password: this.state.confirm_password
+        fetch('http://localhost:8000/api/v1/register',{
+            method : 'POST',
+            headers: {'Content-Type':'application/json'},
+            body : {
+                'name': this.state.name,
+                'email': this.state.email,
+                'password': this.state.password,
+                'password_confirmation': this.state.password_confirmation,
+            }
+        }).then(
+          function (response) {
+              if(response.status !==200){
+                  console.log('Problem in fetching');
+                  return;
+              }
+              response.json().then(function(data) {
+                  console.log(data);
+                  this.setState(['api_token'],data.api_token);
+              });
+          }
+        );
+    }
+
+    fetchUsers() {
+        fetch('http://localhost:8000/api/v1/users').then(
+            function(response) {
+                if (response.status !== 200) {
+                    console.log('Problem in fetching');
+                    return;
+                }
+                response.json().then(function(data) {
+                    console.log(data);
+                });
             })
-        });
-        console.log(user);
     }
 
     render(){
@@ -71,7 +92,7 @@ export default class Register extends Component{
                                 Confirm Password
                             </span>
                             <div className="wrap-input100 validate-input m-b-18">
-                                <input className="input100" type="password" name="confirm_password" value={this.state.confirm_password} onChange={this.updateInput}/>
+                                <input className="input100" type="password" name="password_confirmation" value={this.state.password_confirmation} onChange={this.updateInput}/>
                                 <span className="focus-input100"></span>
                             </div>
                             <div className="container-login100-form-btn">
