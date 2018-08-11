@@ -11,26 +11,22 @@ export default class Register extends Component{
             password_confirmation: '',
             api_token:'',
         }
+        this.register = this.register.bind(this);
+        this.updateInput = this.updateInput.bind(this);
     }
 
-    updateInput = (event) =>{
+    updateInput(event){
         const name = event.target.name;
         const value = event.target.value;
         this.setState({[name]: value});
     }
 
-    handleSubmit = (event)=>{
-        alert(JSON.stringify(this.state));
+    register(event){
         event.preventDefault();
-        fetch('http://localhost:8000/api/v1/register',{
+        fetch('http://incomeexpense.stacklearning.com/api/v1/register',{
             method : 'POST',
             headers: {'Content-Type':'application/json'},
-            body : {
-                'name': this.state.name,
-                'email': this.state.email,
-                'password': this.state.password,
-                'password_confirmation': this.state.password_confirmation,
-            }
+            body : JSON.stringify(this.state),
         }).then(
           function (response) {
               if(response.status !==200){
@@ -45,25 +41,12 @@ export default class Register extends Component{
         );
     }
 
-    fetchUsers() {
-        fetch('http://localhost:8000/api/v1/users').then(
-            function(response) {
-                if (response.status !== 200) {
-                    console.log('Problem in fetching');
-                    return;
-                }
-                response.json().then(function(data) {
-                    console.log(data);
-                });
-            })
-    }
-
     render(){
         return(
             <div className="limiter">
                 <div className="container-login100">
                     <div className="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-                        <form className="login100-form validate-form flex-sb flex-w" onSubmit={this.handleSubmit}>
+                        <form className="login100-form validate-form flex-sb flex-w" onSubmit={this.register}>
                             <span className="login100-form-title p-b-32">
                                 Sign Up
                             </span>

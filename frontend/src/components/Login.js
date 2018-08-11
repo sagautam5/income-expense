@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 
+import {Redirect} from 'react-router-dom';
+
 export default class Login extends Component{
     constructor(props){
         super(props);
@@ -9,7 +11,13 @@ export default class Login extends Component{
             email: '',
             password: '',
             remember: false,
+            api_token: '',
+            login: false,
         }
+        this.showHide = this.showHide.bind(this);
+        this.updateInput = this.updateInput.bind(this);
+        this.updateRemember = this.updateRemember.bind(this);
+        this.login = this.login.bind(this);
     }
 
     showHide(event){
@@ -21,29 +29,52 @@ export default class Login extends Component{
         })
     }
 
-    updateInput = (event) =>{
+    updateInput(event){
         const name = event.target.name;
         const value = event.target.value;
 
         this.setState({[name]: value});
-        console.log(this.state);
     }
 
-    updateRemember = (event) =>{
+    updateRemember(event){
         var current = this.state.remember;
         this.setState({remember: !current});
     }
 
-    handleSubmit(event){
+    login(event){
         event.preventDefault();
+        if(this.state.email && this.state.password){
+            fetch('http://incomeexpense.stacklearning.com/api/v1/login',{
+                method: 'POST',
+                headers: {'Content-Type':'application/json'},
+                body: JSON.stringify(this.state),
+            })
+                .then(
+                    function (response) {
+                        if(response.status !==200){
+                            console.log('Problem in fetching');
+                            return;
+                        }
+                        response.json().then(function(data) {
+                            console.log(data);
+                            this.setState({api_token:data.api_token});
+                            this.setState({login: true});
+                        });
+                    }
+                );
+        }
+        alert(this.state.login);
     }
 
     render(){
+        if(this.state.login){
+            return (<Redirect to={'/home'}/>);
+        }
         return(
             <div className="limiter">
                 <div className="container-login100">
                     <div className="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-                        <form className="login100-form validate-form flex-sb flex-w" onSubmit={this.handleSubmit}>
+                        <form className="login100-form validate-form flex-sb flex-w" onSubmit={this.login}>
                             <span className="login100-form-title p-b-32">
                                 Sign In
                             </span>
@@ -99,7 +130,6 @@ export default class Login extends Component{
                     </div>
                 </div>
             </div>
-
         );
     }
 }
