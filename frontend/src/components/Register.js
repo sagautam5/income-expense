@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import axios from 'axios';
 
 export default class Register extends Component{
     constructor(props){
@@ -23,22 +24,15 @@ export default class Register extends Component{
 
     register(event){
         event.preventDefault();
-        fetch('http://incomeexpense.stacklearning.com/api/v1/register',{
-            method : 'POST',
-            headers: {'Content-Type':'application/json'},
-            body : JSON.stringify(this.state),
-        }).then(
-          function (response) {
-              if(response.status_code !==200){
-                  console.log('Problem in fetching');
-                  return;
-              }
-              response.json().then(function(data) {
-                  console.log(data);
-                  this.setState(['api_token'],data.api_token);
-              });
-          }
-        );
+
+        axios.post('http://127.0.0.1:8000/api/register',this.state).then(response => {
+            this.setState({
+                api_token: response.token
+            });
+        }).catch(error =>{
+            console.log(error);
+        });
+
     }
 
     render(){

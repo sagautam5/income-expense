@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 
 import {Redirect} from 'react-router-dom';
+import axios from 'axios';
 
 export default class Login extends Component{
     constructor(props){
@@ -44,14 +45,13 @@ export default class Login extends Component{
     login(event){
         event.preventDefault();
         if(this.state.email && this.state.password){
-            fetch('http://incomeexpense.stacklearning.com/api/v1/login',{
-                method: 'POST',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify(this.state),
-            })
-                .then(function (response) {
-                    console.log(response.json());
-                })
+           axios.post('http://127.0.0.1:8000/api/login',this.state).then(response => {
+               this.setState({
+                   api_token: response.token
+               })
+           }).catch(error =>{
+               console.log(error);
+           })
         }
     }
 
