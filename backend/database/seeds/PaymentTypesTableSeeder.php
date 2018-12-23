@@ -19,6 +19,6 @@ class PaymentTypesTableSeeder extends Seeder
             ['name'=> 'E-Payment']
         ];
 
-        \App\Models\PaymentType::insert($data);
+        \App\IncomeExpense\Models\PaymentType::insert($data);
     }
 }

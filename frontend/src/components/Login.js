@@ -49,21 +49,10 @@ export default class Login extends Component{
                 headers: {'Content-Type':'application/json'},
                 body: JSON.stringify(this.state),
             })
-                .then(
-                    function (response) {
-                        if(response.status !==200){
-                            console.log('Problem in fetching');
-                            return;
-                        }
-                        response.json().then(function(data) {
-                            console.log(data);
-                            this.setState({api_token:data.api_token});
-                            this.setState({login: true});
-                        });
-                    }
-                );
+                .then(function (response) {
+                    console.log(response.json());
+                })
         }
-        alert(this.state.login);
     }
 
     render(){

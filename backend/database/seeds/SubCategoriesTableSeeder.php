@@ -53,6 +53,6 @@ class SubCategoriesTableSeeder extends Seeder
             ['category_id'=> '2','name'=> 'Others'],
         ];
 
-        \App\Models\SubCategory::insert($data);
+        \App\IncomeExpense\Models\SubCategory::insert($data);
     }
 }

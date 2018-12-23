@@ -16,6 +16,6 @@ class CategoriesTableSeeder extends Seeder
             ['name'=> 'Expense']
         ];
 
-        \App\Models\Category::insert($data);
+        \App\IncomeExpense\Models\Category::insert($data);
     }
 }

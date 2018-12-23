@@ -29,7 +29,7 @@ export default class Register extends Component{
             body : JSON.stringify(this.state),
         }).then(
           function (response) {
-              if(response.status !==200){
+              if(response.status_code !==200){
                   console.log('Problem in fetching');
                   return;
               }
@@ -86,7 +86,7 @@ export default class Register extends Component{
                             <div className="flex-sb-m w-full p-b-48 m-t-60 text-center">
                                 <label>
                                     Already have an account ?
-                                    <a className="txt3 m-l-5" href="/login">
+                                    <a className="txt3 m-l-5" href="/">
                                         Sign In Now
                                     </a>
                                 </label>
